@@ -1,0 +1,165 @@
+﻿<Page
+    x:Class="AngleTestSharp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AngleTestSharp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Light">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource CommandBarBackground}" Height="48"/>
+
+        <Border Width="200" Height="200" Background="Black" Margin="0,0,0,0" Grid.Row="1">
+            <SwapChainPanel x:Name="swapChainPanel" Loaded="swapChainPanel_Loaded" Width="200" Height="200"/>
+        </Border>
+
+        <!--<FlipView x:Name="Flip" SelectionChanged="FlipView_SelectionChanged" Grid.Row="1">
+            <FlipViewItem Background="#2ca5e0">
+                <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+            <FlipViewItem Background="#213448">
+                <TextBlock Text="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+            <FlipViewItem Background="#f64937">
+                <TextBlock Text="3" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+            <FlipViewItem Background="#2f5a83">
+                <TextBlock Text="4" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+            <FlipViewItem Background="#acb3ba">
+                <TextBlock Text="5" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+            <FlipViewItem Background="#2ab4f7">
+                <TextBlock Text="6" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            </FlipViewItem>
+        </FlipView>-->
+        <FlipView x:Name="Flip"
+                  Background="Transparent"
+                  ItemsSource="{Binding Items}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  SelectionChanged="FlipView_SelectionChanged"
+                  Grid.RowSpan="2"
+                  Grid.Row="1"
+                  Visibility="Collapsed">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0">
+                        <TextBlock Padding="12,200,12,12"
+                                   Text="{Binding Title}"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                        <TextBlock Padding="12,0"
+                                   local:Markdown.Text="{Binding Text}"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                    </StackPanel>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+
+        <Grid x:Name="LayoutRoot" HorizontalAlignment="Left" Grid.RowSpan="2" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Background="Transparent">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Unigram"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Unigram** is a Telegram Universal app built by the Windows Community, for the Windows Community"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+            <Border Background="Transparent" Grid.Column="1">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Fast"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Telegram** delivers messages faster&#x0a;than any other application."
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+            <Border Background="Transparent" Grid.Column="2">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Free"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Telegram** is free forever. No ads.&#x0a;No subscription fees."
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+            <Border Background="Transparent" Grid.Column="3">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Powerful"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Telegram** has no limits on&#x0a;the size of your media and chats."
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+            <Border Background="Transparent" Grid.Column="4">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Secure"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Telegram** keeps your messages&#x0a;safe from hacker attacks."
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+            <Border Background="Transparent" Grid.Column="5">
+                <StackPanel Margin="0,0">
+                    <TextBlock Padding="12,200,12,12"
+                                   Text="Cloud-Based"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0"
+                                   local:Markdown.Text="**Telegram** lets you access your&#x0a;messages from multiple devices."
+                                   TextAlignment="Center"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   MaxWidth="360"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Page>
