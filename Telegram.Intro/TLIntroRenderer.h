@@ -12,7 +12,7 @@ namespace Telegram
 		public ref class TLIntroRenderer sealed
 		{
 		public:
-			TLIntroRenderer(SwapChainPanel^ swapChainPanel, bool dark);
+			TLIntroRenderer(SwapChainPanel^ swapChainPanel);
 			virtual ~TLIntroRenderer();
 
 			void Loaded();
@@ -35,19 +35,11 @@ namespace Telegram
 				}
 			}
 
-			property bool IsDarkTheme
-			{
-				bool get() { return mDarkTheme; }
-				void set(bool value)
-				{
-					mDarkTheme = value;
-				}
-			}
-
 		internal:
-			TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel, int dark);
+			TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel);
 
 		private:
+			void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings^ sender, Platform::Object^ args);
 			void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
 			void CreateRenderSurface();
 			void DestroyRenderSurface();
@@ -69,6 +61,8 @@ namespace Telegram
 			EGLSurface mRenderSurface;     // This surface is associated with a swapChainPanel on the page
 			Concurrency::critical_section mRenderSurfaceCriticalSection;
 			Windows::Foundation::IAsyncAction^ mRenderLoopWorker;
+
+			Windows::UI::ViewManagement::UISettings^ mSettings;
 		};
 	}
 }

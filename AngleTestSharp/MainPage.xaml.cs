@@ -34,7 +34,6 @@ namespace AngleTestSharp
     public sealed partial class MainPage : Page
     {
         private TLIntroRenderer _renderer;
-        private UISettings _settings;
 
         private Visual _layoutVisual;
         private bool _selecting;
@@ -47,9 +46,6 @@ namespace AngleTestSharp
 
             _layoutVisual = ElementCompositionPreview.GetElementVisual(LayoutRoot);
 
-            _settings = new UISettings();
-            _settings.ColorValuesChanged += _settings_ColorValuesChanged;
-
             LayoutRoot.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateRailsX | ManipulationModes.TranslateInertia;
             LayoutRoot.ManipulationStarted += LayoutRoot_ManipulationStarted;
             LayoutRoot.ManipulationDelta += LayoutRoot_ManipulationDelta;
@@ -59,11 +55,6 @@ namespace AngleTestSharp
             //Loaded += MainPage_Loaded;
 
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
-        }
-
-        private void _settings_ColorValuesChanged(UISettings sender, object args)
-        {
-            _renderer.IsDarkTheme = sender.GetColorValue(UIColorType.Background) == Colors.Black;
         }
 
         private void LayoutRoot_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
@@ -330,7 +321,7 @@ namespace AngleTestSharp
 
         private void swapChainPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            _renderer = new TLIntroRenderer(swapChainPanel, _settings.GetColorValue(UIColorType.Background) == Colors.Black);
+            _renderer = new TLIntroRenderer(swapChainPanel);
             _renderer.Loaded();
         }
 

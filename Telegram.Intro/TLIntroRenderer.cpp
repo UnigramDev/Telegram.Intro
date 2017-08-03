@@ -10,25 +10,32 @@ using namespace Platform;
 using namespace Concurrency;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::ViewManagement;
+using namespace Windows::UI::Core;
 
-TLIntroRenderer::TLIntroRenderer(SwapChainPanel^ swapChainPanel, bool dark) :
-	TLIntroRenderer(&mOpenGLESHolder, swapChainPanel, dark)
+TLIntroRenderer::TLIntroRenderer(SwapChainPanel^ swapChainPanel) :
+	TLIntroRenderer(&mOpenGLESHolder, swapChainPanel)
 {
 }
 
-TLIntroRenderer::TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel, int dark) :
+TLIntroRenderer::TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel) :
 	mOpenGLES(openGLES),
 	mRenderSurface(EGL_NO_SURFACE),
 	mCurrentPage(0),
 	mCurrentScroll(0),
 	mCurrentScale(1),
-	mDarkTheme(dark),
-	mSwapChainPanel(swapChainPanel)
+	mSwapChainPanel(swapChainPanel),
+	mSettings(ref new UISettings())
 {
-	Windows::UI::Core::CoreWindow^ window = Windows::UI::Xaml::Window::Current->CoreWindow;
+	auto color = mSettings->GetColorValue(UIColorType::Background);
+	mDarkTheme = color.R == 0 && color.G == 0 && color.B == 0;
 
+	mSettings->ColorValuesChanged +=
+		ref new Windows::Foundation::TypedEventHandler<UISettings^, Object^>(this, &TLIntroRenderer::OnColorValuesChanged);
+
+	auto window = Windows::UI::Xaml::Window::Current->CoreWindow;
 	window->VisibilityChanged +=
-		ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow^, Windows::UI::Core::VisibilityChangedEventArgs^>(this, &TLIntroRenderer::OnVisibilityChanged);
+		ref new Windows::Foundation::TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &TLIntroRenderer::OnVisibilityChanged);
 }
 
 TLIntroRenderer::~TLIntroRenderer()
@@ -47,7 +54,13 @@ void TLIntroRenderer::Loaded()
 	//scroll->ViewChanging += ref new Windows::Foundation::EventHandler<Windows::UI::Xaml::Controls::ScrollViewerViewChangingEventArgs ^>(this, &AngleTestLib::TLIntroRenderer::OnViewChanging);
 }
 
-void TLIntroRenderer::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
+void TLIntroRenderer::OnColorValuesChanged(UISettings^ sender, Object^ args)
+{
+	auto color = sender->GetColorValue(UIColorType::Background);
+	mDarkTheme = color.R == 0 && color.G == 0 && color.B == 0;
+}
+
+void TLIntroRenderer::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ args)
 {
 	if (args->Visible && mRenderSurface != EGL_NO_SURFACE)
 	{
