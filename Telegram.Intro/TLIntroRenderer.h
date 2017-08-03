@@ -12,7 +12,7 @@ namespace Telegram
 		public ref class TLIntroRenderer sealed
 		{
 		public:
-			TLIntroRenderer(SwapChainPanel^ swapChainPanel);
+			TLIntroRenderer(SwapChainPanel^ swapChainPanel, bool dark);
 			virtual ~TLIntroRenderer();
 
 			void Loaded();
@@ -35,8 +35,17 @@ namespace Telegram
 				}
 			}
 
+			property bool IsDarkTheme
+			{
+				bool get() { return mDarkTheme; }
+				void set(bool value)
+				{
+					mDarkTheme = value;
+				}
+			}
+
 		internal:
-			TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel);
+			TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel, int dark);
 
 		private:
 			void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
@@ -50,6 +59,7 @@ namespace Telegram
 
 			float mCurrentScroll;
 			int mCurrentPage;
+			int mDarkTheme;
 
 			OpenGLES* mOpenGLES;
 			OpenGLES mOpenGLESHolder;

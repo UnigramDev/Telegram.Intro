@@ -11,17 +11,18 @@ using namespace Concurrency;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml::Controls;
 
-TLIntroRenderer::TLIntroRenderer(SwapChainPanel^ swapChainPanel) :
-	TLIntroRenderer(&mOpenGLESHolder, swapChainPanel)
+TLIntroRenderer::TLIntroRenderer(SwapChainPanel^ swapChainPanel, bool dark) :
+	TLIntroRenderer(&mOpenGLESHolder, swapChainPanel, dark)
 {
 }
 
-TLIntroRenderer::TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel) :
+TLIntroRenderer::TLIntroRenderer(OpenGLES* openGLES, SwapChainPanel^ swapChainPanel, int dark) :
 	mOpenGLES(openGLES),
 	mRenderSurface(EGL_NO_SURFACE),
 	mCurrentPage(0),
 	mCurrentScroll(0),
 	mCurrentScale(1),
+	mDarkTheme(dark),
 	mSwapChainPanel(swapChainPanel)
 {
 	Windows::UI::Core::CoreWindow^ window = Windows::UI::Xaml::Window::Current->CoreWindow;
@@ -135,6 +136,7 @@ void TLIntroRenderer::StartRenderLoop()
 
 			//mRenderer = renderer;
 
+			renderer.SetDarkTheme(mDarkTheme);
 			renderer.SetCurrentPage(mCurrentPage);
 			renderer.SetCurrentScroll(mCurrentScroll);
 

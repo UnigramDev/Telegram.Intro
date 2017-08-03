@@ -27,6 +27,9 @@ extern "C" {
 	extern void set_page(int page);
 
 
+	extern void set_dark_theme(int a);
+
+
 	extern void set_pages_textures(int a1, int a2, int a3, int a4, int a5, int a6);
 
 	extern void set_ic_textures(int a_ic_bubble_dot, int a_ic_bubble, int a_ic_cam_lens, int a_ic_cam, int a_ic_pencil, int a_ic_pin, int a_ic_smile_eye, int a_ic_smile, int a_ic_videocam);

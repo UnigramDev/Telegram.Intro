@@ -21,6 +21,8 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -32,6 +34,7 @@ namespace AngleTestSharp
     public sealed partial class MainPage : Page
     {
         private TLIntroRenderer _renderer;
+        private UISettings _settings;
 
         private Visual _layoutVisual;
         private bool _selecting;
@@ -44,6 +47,9 @@ namespace AngleTestSharp
 
             _layoutVisual = ElementCompositionPreview.GetElementVisual(LayoutRoot);
 
+            _settings = new UISettings();
+            _settings.ColorValuesChanged += _settings_ColorValuesChanged;
+
             LayoutRoot.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateRailsX | ManipulationModes.TranslateInertia;
             LayoutRoot.ManipulationStarted += LayoutRoot_ManipulationStarted;
             LayoutRoot.ManipulationDelta += LayoutRoot_ManipulationDelta;
@@ -51,6 +57,13 @@ namespace AngleTestSharp
             LayoutRoot.PointerWheelChanged += LayoutRoot_PointerWheelChanged;
 
             //Loaded += MainPage_Loaded;
+
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
+        }
+
+        private void _settings_ColorValuesChanged(UISettings sender, object args)
+        {
+            _renderer.IsDarkTheme = sender.GetColorValue(UIColorType.Background) == Colors.Black;
         }
 
         private void LayoutRoot_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
@@ -63,7 +76,7 @@ namespace AngleTestSharp
             _selecting = true;
 
             var point = e.GetCurrentPoint(LayoutRoot);
-            var delta = point.Properties.MouseWheelDelta;
+            var delta = -point.Properties.MouseWheelDelta;
             var width = (float)ActualWidth;
 
             var current = -(_selectedIndex * width);
@@ -317,7 +330,7 @@ namespace AngleTestSharp
 
         private void swapChainPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            _renderer = new TLIntroRenderer(swapChainPanel);
+            _renderer = new TLIntroRenderer(swapChainPanel, _settings.GetColorValue(UIColorType.Background) == Colors.Black);
             _renderer.Loaded();
         }
 
@@ -429,28 +442,26 @@ namespace AngleTestSharp
             sender.Inlines.Clear();
 
             var previous = 0;
-            var previousNext = 0;
             var index = markdown.IndexOf("**");
             var next = index > -1 ? markdown.IndexOf("**", index + 2) : -1;
 
             while (index > -1 && next > -1)
             {
-                sender.Inlines.Add(new Run { Text = markdown.Substring(index + 2, next - index - 2), FontWeight = FontWeights.SemiBold });
-
                 if (index - previous > 0)
                 {
                     sender.Inlines.Add(new Run { Text = markdown.Substring(previous, index - previous) });
                 }
 
-                previous = index;
-                previousNext = next;
+                sender.Inlines.Add(new Run { Text = markdown.Substring(index + 2, next - index - 2), FontWeight = FontWeights.SemiBold });
+
+                previous = next + 2;
                 index = markdown.IndexOf("**", next + 2);
                 next = index > -1 ? markdown.IndexOf("**", index + 2) : -1;
             }
 
-            if (markdown.Length - (previousNext + 2) > 0)
+            if (markdown.Length - previous > 0)
             {
-                sender.Inlines.Add(new Run { Text = markdown.Substring(previousNext + 2, markdown.Length - (previousNext + 2)) });
+                sender.Inlines.Add(new Run { Text = markdown.Substring(previous, markdown.Length - previous) });
             }
         }
     }

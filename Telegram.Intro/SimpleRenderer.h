@@ -17,6 +17,7 @@ namespace Telegram
 
 			void SetCurrentPage(int page);
 			void SetCurrentScroll(float scroll);
+			void SetDarkTheme(int theme);
 
 		private:
 			GLsizei mWindowWidth;
@@ -24,6 +25,7 @@ namespace Telegram
 
 			float mCurrentScroll;
 			int mCurrentPage;
+			int mDarkTheme;
 
 			double CFAbsoluteTimeGetCurrent();
 		};

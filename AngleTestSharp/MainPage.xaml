@@ -5,8 +5,7 @@
     xmlns:local="using:AngleTestSharp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    RequestedTheme="Light">
+    mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -14,7 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Background="{ThemeResource CommandBarBackground}" Height="48"/>
+        <Border Background="{ThemeResource CommandBarBackground}" Opacity="0" Height="48"/>
 
         <Border Width="200" Height="200" Background="Black" Margin="0,0,0,0" Grid.Row="1">
             <SwapChainPanel x:Name="swapChainPanel" Loaded="swapChainPanel_Loaded" Width="200" Height="200"/>
@@ -78,12 +77,12 @@
             <Border Background="Transparent">
                 <StackPanel Margin="0,0">
                     <TextBlock Padding="12,200,12,12"
-                                   Text="Unigram"
+                                   Text="Telegram"
                                    FontWeight="SemiBold"
                                    TextAlignment="Center"
                                    Style="{ThemeResource TitleTextBlockStyle}"/>
                     <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Unigram** is a Telegram Universal app built by the Windows Community, for the Windows Community"
+                                   local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
                                    TextAlignment="Center"
                                    Style="{ThemeResource BodyTextBlockStyle}"
                                    MaxWidth="360"/>

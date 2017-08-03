@@ -62,7 +62,8 @@ void SimpleRenderer::Draw()
 	//glEnable(GL_DEPTH_TEST);
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	set_page((int)mCurrentPage);
+	set_dark_theme(mDarkTheme);
+	set_page(mCurrentPage);
 	set_date(CFAbsoluteTimeGetCurrent());
 
 	on_draw_frame();
@@ -77,6 +78,11 @@ void SimpleRenderer::SetCurrentScroll(float scroll)
 {
 	mCurrentScroll = scroll;
 	set_scroll_offset(scroll);
+}
+
+void SimpleRenderer::SetDarkTheme(int theme)
+{
+	mDarkTheme = theme;
 }
 
 void SimpleRenderer::UpdateWindowSize(GLsizei width, GLsizei height)
