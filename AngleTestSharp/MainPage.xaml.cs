@@ -31,7 +31,7 @@ namespace AngleTestSharp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private OpenGLESPage _renderer;
+        private TLIntroRenderer _renderer;
 
         private Visual _layoutVisual;
         private bool _selecting;
@@ -317,7 +317,7 @@ namespace AngleTestSharp
 
         private void swapChainPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            _renderer = new OpenGLESPage(swapChainPanel);
+            _renderer = new TLIntroRenderer(swapChainPanel);
             _renderer.Loaded();
         }
 
