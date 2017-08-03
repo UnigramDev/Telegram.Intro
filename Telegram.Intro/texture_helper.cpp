@@ -17,7 +17,7 @@ GLuint setup_texture(LPTSTR fileName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	HRESULT hr = WICTexImage2DFromFile(GL_TEXTURE_2D, 0, (widePath + L"\\Assets\\" + fileName).c_str());
+	HRESULT hr = WICTexImage2DFromFile(GL_TEXTURE_2D, 0, (widePath + L"\\Telegram.Intro\\Assets\\" + fileName).c_str());
 
 	auto failed = FAILED(hr);
 

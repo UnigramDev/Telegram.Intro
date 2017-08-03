@@ -10,6 +10,9 @@
     <Filter Include="3rdparty\linmath">
       <UniqueIdentifier>{bb100ee0-7d54-4406-b951-ef14920440cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{fef2ec62-81bb-432b-8f84-ff592fdc934f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -87,5 +90,76 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\fast_arrow.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\fast_arrow_shadow.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\fast_body.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\fast_spiral.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_bubble.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_bubble_dot.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_cam.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_cam_lens.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_pencil.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_pin.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_smile.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_smile_eye.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ic_videocam.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\knot_down.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\knot_up.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\powerful_infinity.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\powerful_infinity_white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\powerful_mask.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\powerful_star.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\private_door.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\private_screw.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\telegram_plane.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\telegram_sphere.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

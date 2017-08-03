@@ -278,6 +278,31 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\fast_arrow.png" />
+    <Image Include="Assets\fast_arrow_shadow.png" />
+    <Image Include="Assets\fast_body.png" />
+    <Image Include="Assets\fast_spiral.png" />
+    <Image Include="Assets\ic_bubble.png" />
+    <Image Include="Assets\ic_bubble_dot.png" />
+    <Image Include="Assets\ic_cam.png" />
+    <Image Include="Assets\ic_cam_lens.png" />
+    <Image Include="Assets\ic_pencil.png" />
+    <Image Include="Assets\ic_pin.png" />
+    <Image Include="Assets\ic_smile.png" />
+    <Image Include="Assets\ic_smile_eye.png" />
+    <Image Include="Assets\ic_videocam.png" />
+    <Image Include="Assets\knot_down.png" />
+    <Image Include="Assets\knot_up.png" />
+    <Image Include="Assets\powerful_infinity.png" />
+    <Image Include="Assets\powerful_infinity_white.png" />
+    <Image Include="Assets\powerful_mask.png" />
+    <Image Include="Assets\powerful_star.png" />
+    <Image Include="Assets\private_door.png" />
+    <Image Include="Assets\private_screw.png" />
+    <Image Include="Assets\telegram_plane.png" />
+    <Image Include="Assets\telegram_sphere.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\ANGLE.WindowsStore.2.1.13\build\native\ANGLE.WindowsStore.targets" Condition="Exists('..\packages\ANGLE.WindowsStore.2.1.13\build\native\ANGLE.WindowsStore.targets')" />

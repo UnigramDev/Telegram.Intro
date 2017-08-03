@@ -111,32 +111,6 @@
     <None Include="AngleTestSharp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\fast_arrow.png" />
-    <Content Include="Assets\fast_arrow_shadow.png" />
-    <Content Include="Assets\fast_body.png" />
-    <Content Include="Assets\fast_spiral.png" />
-    <Content Include="Assets\ic_bubble.png" />
-    <Content Include="Assets\ic_bubble_dot.png" />
-    <Content Include="Assets\ic_cam.png" />
-    <Content Include="Assets\ic_cam_lens.png" />
-    <Content Include="Assets\ic_pencil.png" />
-    <Content Include="Assets\ic_pin.png" />
-    <Content Include="Assets\ic_smile.png" />
-    <Content Include="Assets\ic_smile_eye.png" />
-    <Content Include="Assets\ic_videocam.png" />
-    <Content Include="Assets\knot_down.png" />
-    <Content Include="Assets\knot_up.png" />
-    <Content Include="Assets\powerful_infinity.png" />
-    <Content Include="Assets\powerful_infinity_white.png" />
-    <Content Include="Assets\powerful_mask.png" />
-    <Content Include="Assets\powerful_star.png" />
-    <Content Include="Assets\private_door.png" />
-    <Content Include="Assets\private_screw.png" />
-    <Content Include="Assets\start_arrow%402x.png" />
-    <Content Include="Assets\start_arrow_ipad%402x.png" />
-    <Content Include="Assets\start_arrow_ipad.png" />
-    <Content Include="Assets\telegram_plane.png" />
-    <Content Include="Assets\telegram_sphere.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
