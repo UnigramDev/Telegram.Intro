@@ -2177,7 +2177,7 @@ void on_draw_frame() {
 
     else if (current_page == 2)
     {
-        rglNormalDraw();
+		rglNormalDrawThroughMask();
 
         float dribbon=87;
 
