@@ -17,22 +17,12 @@ namespace Telegram
 
 			void Loaded();
 
-			property float CurrentScroll
-			{
-				float get() { return mCurrentScroll; }
-				void set(float value)
-				{
-					mCurrentScroll = value;
-				}
+			void SetPage(int value) {
+				mCurrentPage = value;
 			}
 
-			property int CurrentPage
-			{
-				int get() { return mCurrentPage; }
-				void set(int value)
-				{
-					mCurrentPage = value;
-				}
+			void SetScroll(float value) {
+				mCurrentScroll = value;
 			}
 
 		internal:

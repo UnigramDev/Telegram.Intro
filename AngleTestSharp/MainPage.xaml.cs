@@ -99,14 +99,14 @@ namespace AngleTestSharp
             {
                 // previous
                 _selectedIndex--;
-                _renderer.CurrentPage = _selectedIndex;
+                _renderer.SetPage(_selectedIndex);
                 animation.InsertKeyFrame(1, minimum);
             }
             else if (delta > 0)
             {
                 // next
                 _selectedIndex++;
-                _renderer.CurrentPage = _selectedIndex;
+                _renderer.SetPage(_selectedIndex);
                 animation.InsertKeyFrame(1, maximum);
             }
             else
@@ -164,7 +164,7 @@ namespace AngleTestSharp
             position += _selectedIndex;
 
             _layoutVisual.Offset = offset;
-            _renderer.CurrentScroll = -position;
+            _renderer.SetScroll(-position);
         }
 
         private void LayoutRoot_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
@@ -185,7 +185,7 @@ namespace AngleTestSharp
 
             Debug.WriteLine(position);
 
-            _renderer.CurrentScroll = 0;
+            _renderer.SetScroll(0);
 
             var batch = _layoutVisual.Compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
 
@@ -196,14 +196,14 @@ namespace AngleTestSharp
             {
                 // previous
                 _selectedIndex--;
-                _renderer.CurrentPage = _selectedIndex;
+                _renderer.SetPage(_selectedIndex);
                 animation.InsertKeyFrame(1, minimum);
             }
             else if (position != 0 && (position < -0.3f || e.Velocities.Linear.X < -1.5f))
             {
                 // next
                 _selectedIndex++;
-                _renderer.CurrentPage = _selectedIndex;
+                _renderer.SetPage(_selectedIndex);
                 animation.InsertKeyFrame(1, maximum);
             }
             else
@@ -302,7 +302,7 @@ namespace AngleTestSharp
             ////    _renderer.CurrentScroll = offset;
             ////}
 
-            _renderer.CurrentScroll = (float)e.NextView.HorizontalOffset - 2 - Flip.SelectedIndex;
+            _renderer.SetScroll((float)e.NextView.HorizontalOffset - 2 - Flip.SelectedIndex);
 
             //Debug.WriteLine(e.NextView.HorizontalOffset);
 
@@ -329,24 +329,8 @@ namespace AngleTestSharp
         {
             if (_renderer != null)
             {
-                _renderer.CurrentScroll = 0;
-                _renderer.CurrentPage = Flip.SelectedIndex;
-            }
-        }
-
-        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (_renderer != null)
-            {
-                _renderer.CurrentPage = (int)e.NewValue;
-            }
-        }
-
-        private void Slider_ValueChanged_1(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (_renderer != null)
-            {
-                _renderer.CurrentScroll = (float)(e.NewValue / 100);
+                _renderer.SetScroll(0);
+                _renderer.SetPage(Flip.SelectedIndex);
             }
         }
 
