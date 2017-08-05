@@ -26,12 +26,12 @@ using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace AngleTestSharp
+namespace Telegram.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class IntroPage : Page
     {
         private TLIntroRenderer _renderer;
 
@@ -39,10 +39,10 @@ namespace AngleTestSharp
         private bool _selecting;
         private int _selectedIndex;
 
-        public MainPage()
+        public IntroPage()
         {
             InitializeComponent();
-            DataContext = new SignInWelcomeViewModel();
+            DataContext = new IntroViewModel();
 
             _layoutVisual = ElementCompositionPreview.GetElementVisual(LayoutRoot);
 
@@ -224,7 +224,15 @@ namespace AngleTestSharp
         protected override Size MeasureOverride(Size availableSize)
         {
             var size = base.MeasureOverride(availableSize);
+            var current = -(_selectedIndex * availableSize.Width);
+
             LayoutRoot.Width = availableSize.Width * 6;
+
+            if (_layoutVisual != null)
+            {
+                _layoutVisual.Offset = new System.Numerics.Vector3((float)current, 48, 0);
+            }
+
             return size;
         }
 
@@ -354,9 +362,9 @@ namespace AngleTestSharp
         }
     }
 
-    public class SignInWelcomeViewModel : ViewModelBase
+    public class IntroViewModel : ViewModelBase
     {
-        public SignInWelcomeViewModel()
+        public IntroViewModel()
         {
             Items = new ObservableCollection<WelcomeTab>();
 

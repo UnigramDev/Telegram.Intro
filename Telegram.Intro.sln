@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Telegram.Intro", "Telegram.Intro\Telegram.Intro.vcxproj", "{1CFA1BFA-98D3-4316-8E3B-AC3EA8B3510E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngleTestSharp", "AngleTestSharp\AngleTestSharp.csproj", "{CDBBED4F-2857-4B6D-A20B-CD2A3B867736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{CDBBED4F-2857-4B6D-A20B-CD2A3B867736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
