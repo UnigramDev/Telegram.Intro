@@ -172,39 +172,50 @@ namespace Telegram.Views
             var width = (float)ActualWidth;
 
             var current = -(_selectedIndex * width);
-            var previous = current + width;
-            var next = current - width;
 
-            var maximum = next;
-            var minimum = previous;
+            var maximum = current - width;
+            var minimum = current + width;
 
             var offset = _layoutVisual.Offset;
             var position = Math.Max(maximum, Math.Min(minimum, offset.X)) / width;
 
             position += _selectedIndex;
 
-            Debug.WriteLine(position);
-
             _renderer.SetScroll(0);
 
             var batch = _layoutVisual.Compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
 
             var animation = _layoutVisual.Compositor.CreateScalarKeyFrameAnimation();
+
             animation.InsertKeyFrame(0, offset.X);
 
-            if (position != 0 && (position > 0.3f || e.Velocities.Linear.X > 1.5f))
+            if (position != 0 && e.Velocities.Linear.X > 1.5f)
             {
-                // previous
-                _selectedIndex--;
-                _renderer.SetPage(_selectedIndex);
-                animation.InsertKeyFrame(1, minimum);
+                if (_selectedIndex > 0)
+                {
+                    // previous
+                    _selectedIndex--;
+                    _renderer.SetPage(_selectedIndex);
+                    animation.InsertKeyFrame(1, minimum);
+                }
+                else
+                {
+                    animation.InsertKeyFrame(1, current);
+                }
             }
-            else if (position != 0 && (position < -0.3f || e.Velocities.Linear.X < -1.5f))
+            else if (position != 0 && e.Velocities.Linear.X < -1.5f)
             {
-                // next
-                _selectedIndex++;
-                _renderer.SetPage(_selectedIndex);
-                animation.InsertKeyFrame(1, maximum);
+                if (_selectedIndex < 5)
+                {
+                    // next
+                    _selectedIndex++;
+                    _renderer.SetPage(_selectedIndex);
+                    animation.InsertKeyFrame(1, maximum);
+                }
+                else
+                {
+                    animation.InsertKeyFrame(1, current);
+                }
             }
             else
             {
