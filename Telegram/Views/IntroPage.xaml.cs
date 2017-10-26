@@ -23,6 +23,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using Windows.Devices.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,8 +37,11 @@ namespace Telegram.Views
         private TLIntroRenderer _renderer;
 
         private Visual _layoutVisual;
-        private bool _selecting;
         private int _selectedIndex;
+        private bool _selecting;
+
+        private DispatcherTimer _timer;
+        private bool _timedOut;
 
         public IntroPage()
         {
@@ -45,11 +49,16 @@ namespace Telegram.Views
 
             _layoutVisual = ElementCompositionPreview.GetElementVisual(LayoutRoot);
 
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(3);
+            _timer.Tick += Interact_Tick;
+
             LayoutRoot.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateRailsX | ManipulationModes.TranslateInertia;
             LayoutRoot.ManipulationStarted += LayoutRoot_ManipulationStarted;
             LayoutRoot.ManipulationDelta += LayoutRoot_ManipulationDelta;
             LayoutRoot.ManipulationCompleted += LayoutRoot_ManipulationCompleted;
-            LayoutRoot.PointerWheelChanged += LayoutRoot_PointerWheelChanged;
+
+            SetIndex(_selectedIndex = 0);
         }
 
         private void SwapChain_Loaded(object sender, RoutedEventArgs e)
@@ -58,7 +67,70 @@ namespace Telegram.Views
             _renderer.Loaded();
         }
 
-        private void LayoutRoot_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        private void Interact_Tick(object sender, object e)
+        {
+            _timer.Stop();
+            _timedOut = true;
+
+            SetIndex(_selectedIndex);
+        }
+
+        protected override void OnPointerMoved(PointerRoutedEventArgs e)
+        {
+            base.OnPointerMoved(e);
+            Interact(e.Pointer.PointerDeviceType != PointerDeviceType.Touch);
+        }
+
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
+        {
+            base.OnPointerPressed(e);
+            Interact(e.Pointer.PointerDeviceType != PointerDeviceType.Touch);
+        }
+
+        protected override void OnPointerWheelChanged(PointerRoutedEventArgs e)
+        {
+            base.OnPointerWheelChanged(e);
+            Interact(e.Pointer.PointerDeviceType != PointerDeviceType.Touch);
+
+            var point = e.GetCurrentPoint(LayoutRoot);
+            var delta = -point.Properties.MouseWheelDelta;
+
+            Scroll(delta);
+        }
+
+        private void Interact(bool start)
+        {
+            _timedOut = !start;
+
+            if (start)
+            {
+                _timer.Stop();
+                _timer.Start();
+            }
+
+            SetIndex(_selectedIndex);
+        }
+
+        private void SetIndex(int index)
+        {
+            Carousel.SelectedIndex = index;
+            BackButton.Visibility = index > 0 && !_timedOut ? Visibility.Visible : Visibility.Collapsed;
+            NextButton.Visibility = index < 5 && !_timedOut ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Interact(true);
+            Scroll(-1);
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            Interact(true);
+            Scroll(+1);
+        }
+
+        private void Scroll(double delta)
         {
             if (_selecting)
             {
@@ -67,10 +139,7 @@ namespace Telegram.Views
 
             _selecting = true;
 
-            var point = e.GetCurrentPoint(LayoutRoot);
-            var delta = -point.Properties.MouseWheelDelta;
             var width = (float)ActualWidth;
-
             var current = -(_selectedIndex * width);
             var previous = current + width;
             var next = current - width;
@@ -118,14 +187,13 @@ namespace Telegram.Views
 
             _layoutVisual.StartAnimation("Offset.X", animation);
 
-            Carousel.SelectedIndex = _selectedIndex;
+            SetIndex(_selectedIndex);
 
             batch.Completed += (s, args) =>
             {
                 _selecting = false;
             };
             batch.End();
-
         }
 
         private void LayoutRoot_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
@@ -217,7 +285,7 @@ namespace Telegram.Views
 
             _layoutVisual.StartAnimation("Offset.X", animation);
 
-            Carousel.SelectedIndex = _selectedIndex;
+            SetIndex(_selectedIndex);
 
             batch.Completed += (s, args) =>
             {
@@ -239,53 +307,6 @@ namespace Telegram.Views
             }
 
             return size;
-        }
-    }
-
-    public static class Markdown
-    {
-        public static string GetText(DependencyObject obj)
-        {
-            return (string)obj.GetValue(TextProperty);
-        }
-
-        public static void SetText(DependencyObject obj, string value)
-        {
-            obj.SetValue(TextProperty, value);
-        }
-
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.RegisterAttached("Text", typeof(string), typeof(Markdown), new PropertyMetadata(null, OnTextChanged));
-
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var sender = d as TextBlock;
-            var markdown = e.NewValue as string;
-
-            sender.Inlines.Clear();
-
-            var previous = 0;
-            var index = markdown.IndexOf("**");
-            var next = index > -1 ? markdown.IndexOf("**", index + 2) : -1;
-
-            while (index > -1 && next > -1)
-            {
-                if (index - previous > 0)
-                {
-                    sender.Inlines.Add(new Run { Text = markdown.Substring(previous, index - previous) });
-                }
-
-                sender.Inlines.Add(new Run { Text = markdown.Substring(index + 2, next - index - 2), FontWeight = FontWeights.SemiBold });
-
-                previous = next + 2;
-                index = markdown.IndexOf("**", next + 2);
-                next = index > -1 ? markdown.IndexOf("**", index + 2) : -1;
-            }
-
-            if (markdown.Length - previous > 0)
-            {
-                sender.Inlines.Add(new Run { Text = markdown.Substring(previous, markdown.Length - previous) });
-            }
         }
     }
 }
