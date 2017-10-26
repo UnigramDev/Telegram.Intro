@@ -7,65 +7,214 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="StartButtonBackground" Color="#2ca5e0" />
+        <SolidColorBrush x:Key="StartButtonBackgroundPointerOver" Color="#2ca5e0" />
+        <SolidColorBrush x:Key="StartButtonBackgroundPressed" Color="#227eab" />
+        <StaticResource x:Key="StartButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+        <StaticResource x:Key="StartButtonForeground" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+        <StaticResource x:Key="StartButtonForegroundPointerOver" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+        <StaticResource x:Key="StartButtonForegroundPressed" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+        <StaticResource x:Key="StartButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+        <StaticResource x:Key="StartButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
+        <StaticResource x:Key="StartButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
+        <StaticResource x:Key="StartButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+        <StaticResource x:Key="StartButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+
+        <Style x:Key="StartButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Margin" Value="24"/>
+            <Setter Property="Padding" Value="12,3,12,5" />
+            <Setter Property="Foreground" Value="{ThemeResource StartButtonForeground}"/>
+            <Setter Property="Background" Value="{ThemeResource StartButtonBackground}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource StartButtonBorderBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="16">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBackgroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonForegroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonForegroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBackgroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonBorderBrushDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource StartButtonForegroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              CornerRadius="16"
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              BorderThickness="{TemplateBinding BorderThickness}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTransitions="{TemplateBinding ContentTransitions}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              AutomationProperties.AccessibilityView="Raw" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IndicatorListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="IsFocusEngagementEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver"/>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverSelected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PressedSelected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse x:Name="fillColor" IsHitTestVisible="False" Width="8" Height="8" Fill="#bfbfbf" Margin="4,0"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IndicatorListViewStyle" TargetType="ListView">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="TabNavigation" Value="Once"/>
+            <Setter Property="IsSwipeEnabled" Value="True"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False"/>
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled"/>
+            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True"/>
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
+            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition/>
+                        <ContentThemeTransition/>
+                        <ReorderThemeTransition/>
+                        <EntranceThemeTransition IsStaggeringEnabled="False"/>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <ItemsPresenter FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}" Padding="{TemplateBinding Padding}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Border Background="{ThemeResource CommandBarBackground}" Opacity="0" Height="48"/>
+        <StackPanel VerticalAlignment="Center">
+            <Border Width="200" Height="200" Background="Black">
+                <SwapChainPanel x:Name="SwapChain" Loaded="SwapChain_Loaded" Width="200" Height="200"/>
+            </Border>
+            <StackPanel Opacity="0">
+                <TextBlock Padding="12,0,12,12"
+                           Text="Telegram"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"
+                           Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Padding="12,0,12,48"
+                           local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
+                           TextAlignment="Center"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           MaxWidth="360"/>
+            </StackPanel>
+            <ListView x:Name="Carousel"
+                      Style="{StaticResource IndicatorListViewStyle}"
+                      ItemContainerStyle="{StaticResource IndicatorListViewItemStyle}"
+                      IsFocusEngagementEnabled="False"
+                      IsHitTestVisible="False"
+                      IsTabStop="False"
+                      SelectedIndex="0"
+                      Grid.Row="4">
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+            </ListView>
+        </StackPanel>
 
-        <Border Width="200" Height="200" Background="Black" Margin="0,0,0,0" Grid.Row="1">
-            <SwapChainPanel x:Name="swapChainPanel" Loaded="swapChainPanel_Loaded" Width="200" Height="200"/>
-        </Border>
-
-        <!--<FlipView x:Name="Flip" SelectionChanged="FlipView_SelectionChanged" Grid.Row="1">
-            <FlipViewItem Background="#2ca5e0">
-                <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-            <FlipViewItem Background="#213448">
-                <TextBlock Text="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-            <FlipViewItem Background="#f64937">
-                <TextBlock Text="3" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-            <FlipViewItem Background="#2f5a83">
-                <TextBlock Text="4" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-            <FlipViewItem Background="#acb3ba">
-                <TextBlock Text="5" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-            <FlipViewItem Background="#2ab4f7">
-                <TextBlock Text="6" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-            </FlipViewItem>
-        </FlipView>-->
-        <FlipView x:Name="Flip"
-                  Background="Transparent"
-                  ItemsSource="{Binding Items}"
-                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                  SelectionChanged="FlipView_SelectionChanged"
-                  Grid.RowSpan="2"
-                  Grid.Row="1"
-                  Visibility="Collapsed">
-            <FlipView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,0">
-                        <TextBlock Padding="12,200,12,12"
-                                   Text="{Binding Title}"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                        <TextBlock Padding="12,0"
-                                   local:Markdown.Text="{Binding Text}"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
-                    </StackPanel>
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
-
-        <Grid x:Name="LayoutRoot" HorizontalAlignment="Left" Grid.RowSpan="2" Grid.Row="1">
+        <Grid x:Name="LayoutRoot" Background="Transparent" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -74,91 +223,92 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Background="Transparent">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
-                                   Text="Telegram"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                               Text="Telegram"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
-            <Border Background="Transparent" Grid.Column="1">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center" Grid.Column="1">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
-                                   Text="Fast"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Telegram** delivers messages faster&#x0a;than any other application."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                               Text="Fast"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="**Telegram** delivers messages faster&#x0a;than any other application."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
-            <Border Background="Transparent" Grid.Column="2">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center" Grid.Column="2">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
-                                   Text="Free"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Telegram** is free forever. No ads.&#x0a;No subscription fees."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                               Text="Free"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="**Telegram** is free forever. No ads.&#x0a;No subscription fees."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
-            <Border Background="Transparent" Grid.Column="3">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center" Grid.Column="3">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
                                    Text="Powerful"
                                    FontWeight="SemiBold"
                                    TextAlignment="Center"
                                    Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Telegram** has no limits on&#x0a;the size of your media and chats."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="**Telegram** has no limits on&#x0a;the size of your media and chats."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
-            <Border Background="Transparent" Grid.Column="4">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center" Grid.Column="4">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
                                    Text="Secure"
                                    FontWeight="SemiBold"
                                    TextAlignment="Center"
                                    Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Telegram** keeps your messages&#x0a;safe from hacker attacks."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="**Telegram** keeps your messages&#x0a;safe from hacker attacks."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
-            <Border Background="Transparent" Grid.Column="5">
-                <StackPanel Margin="0,0">
+            <Border VerticalAlignment="Center" Grid.Column="5">
+                <StackPanel>
                     <TextBlock Padding="12,200,12,12"
-                                   Text="Cloud-Based"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0"
-                                   local:Markdown.Text="**Telegram** lets you access your&#x0a;messages from multiple devices."
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource BodyTextBlockStyle}"
-                                   MaxWidth="360"/>
+                               Text="Cloud-Based"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Padding="12,0,12,88"
+                               local:Markdown.Text="**Telegram** lets you access your&#x0a;messages from multiple devices."
+                               TextAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               MaxWidth="360"/>
                 </StackPanel>
             </Border>
         </Grid>
 
+        <Button Content="Start Messaging" Style="{StaticResource StartButtonStyle}"/>
     </Grid>
 </Page>

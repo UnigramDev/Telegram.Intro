@@ -42,7 +42,6 @@ namespace Telegram.Views
         public IntroPage()
         {
             InitializeComponent();
-            DataContext = new IntroViewModel();
 
             _layoutVisual = ElementCompositionPreview.GetElementVisual(LayoutRoot);
 
@@ -51,10 +50,12 @@ namespace Telegram.Views
             LayoutRoot.ManipulationDelta += LayoutRoot_ManipulationDelta;
             LayoutRoot.ManipulationCompleted += LayoutRoot_ManipulationCompleted;
             LayoutRoot.PointerWheelChanged += LayoutRoot_PointerWheelChanged;
+        }
 
-            //Loaded += MainPage_Loaded;
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
+        private void SwapChain_Loaded(object sender, RoutedEventArgs e)
+        {
+            _renderer = new TLIntroRenderer(SwapChain);
+            _renderer.Loaded();
         }
 
         private void LayoutRoot_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
@@ -116,6 +117,8 @@ namespace Telegram.Views
             }
 
             _layoutVisual.StartAnimation("Offset.X", animation);
+
+            Carousel.SelectedIndex = _selectedIndex;
 
             batch.Completed += (s, args) =>
             {
@@ -214,6 +217,8 @@ namespace Telegram.Views
 
             _layoutVisual.StartAnimation("Offset.X", animation);
 
+            Carousel.SelectedIndex = _selectedIndex;
+
             batch.Completed += (s, args) =>
             {
                 _selecting = false;
@@ -230,175 +235,10 @@ namespace Telegram.Views
 
             if (_layoutVisual != null)
             {
-                _layoutVisual.Offset = new System.Numerics.Vector3((float)current, 48, 0);
+                _layoutVisual.Offset = new System.Numerics.Vector3((float)current, 0, 0);
             }
 
             return size;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var scroll = FindVisualChild<ScrollViewer>(Flip);
-            scroll.ViewChanging += Scroll_ViewChanging;
-        }
-
-        private void Scroll_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-        {
-
-            ////var offset = (float)e.NextView.HorizontalOffset - (int)e.NextView.HorizontalOffset;
-            ////if (e.NextView.HorizontalOffset < Flip.SelectedIndex + 2)
-            ////{
-            ////    _renderer.CurrentScroll = -(1 - offset);
-            ////}
-            ////else if (e.NextView.HorizontalOffset > Flip.SelectedIndex + 2)
-            ////{
-            ////    _renderer.CurrentScroll = offset;
-            ////}
-
-            _renderer.SetScroll((float)e.NextView.HorizontalOffset - 2 - Flip.SelectedIndex);
-
-            //Debug.WriteLine(e.NextView.HorizontalOffset);
-
-            //if (Flip.SelectedIndex == 1 && e.NextView.HorizontalOffset < 3)
-            //{
-            //    // From page 1 to 0:
-            //    _renderer.CurrentScroll = -(1 - decpart);
-            //    Debug.WriteLine("NextView: " + e.NextView.HorizontalOffset + " Decimal part: " + -(1 - decpart));
-            //}
-            //else if (Flip.SelectedIndex == 1 && e.NextView.HorizontalOffset > 3)
-            //{
-            //    _renderer.CurrentScroll = decpart;
-            //    Debug.WriteLine("NextView: " + e.NextView.HorizontalOffset + " Decimal part: " + decpart);
-            //}
-        }
-
-        private void swapChainPanel_Loaded(object sender, RoutedEventArgs e)
-        {
-            _renderer = new TLIntroRenderer(swapChainPanel);
-            _renderer.Loaded();
-        }
-
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_renderer != null)
-            {
-                _renderer.SetScroll(0);
-                _renderer.SetPage(Flip.SelectedIndex);
-            }
-        }
-
-        public static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-
-                if (child != null && child is T)
-                    return (T)child;
-                else
-                {
-                    T childOfChild = FindVisualChild<T>(child);
-                    if (childOfChild != null)
-                        return childOfChild;
-                }
-            }
-
-            return null;
-        }
-    }
-
-    public class IntroViewModel : ViewModelBase
-    {
-        public IntroViewModel()
-        {
-            Items = new ObservableCollection<WelcomeTab>();
-
-            // TODO: put them in a separate file?
-            // TODO: localization
-            Items.Add(new WelcomeTab { Title = "Unigram", Text = "**Unigram** is a Telegram Universal app built by the Windows Community, for the Windows Community" });
-            Items.Add(new WelcomeTab { Title = "Fast", Text = "**Telegram** delivers messages faster\nthan any other application." });
-            Items.Add(new WelcomeTab { Title = "Free", Text = "**Telegram** is free forever. No ads.\nNo subscription fees." });
-            Items.Add(new WelcomeTab { Title = "Powerful", Text = "**Telegram** has no limits on\nthe size of your media and chats." });
-            Items.Add(new WelcomeTab { Title = "Secure", Text = "**Telegram** keeps your messages\nsafe from hacker attacks." });
-            Items.Add(new WelcomeTab { Title = "Cloud-Based", Text = "**Telegram** lets you access your\nmessages from multiple devices." });
-            SelectedItem = Items[0];
-        }
-
-        private WelcomeTab _selectedItem;
-        public WelcomeTab SelectedItem
-        {
-            get
-            {
-                return _selectedItem;
-            }
-            set
-            {
-                //Set(ref _selectedItem, value);
-            }
-        }
-
-        public ObservableCollection<WelcomeTab> Items { get; private set; }
-
-        public class WelcomeTab
-        {
-            public string Title { get; set; }
-
-            public string Text { get; set; }
         }
     }
 
