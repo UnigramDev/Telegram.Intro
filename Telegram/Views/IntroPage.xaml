@@ -99,85 +99,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style x:Key="IndicatorListViewItemStyle" TargetType="ListViewItem">
-            <Setter Property="Width" Value="20"/>
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="IsFocusEngagementEnabled" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <Grid Background="{TemplateBinding Background}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="PointerOver"/>
-                                    <VisualState x:Name="Selected">
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverSelected">
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="PressedSelected">
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="fillColor" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" BeginTime="00:00:00" Duration="0" To="#3c3c3a"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Ellipse x:Name="fillColor" IsHitTestVisible="False" Width="8" Height="8" Fill="#bfbfbf" Margin="4,0"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="IndicatorListViewStyle" TargetType="ListView">
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="TabNavigation" Value="Once"/>
-            <Setter Property="IsSwipeEnabled" Value="True"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled"/>
-            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True"/>
-            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
-            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="ItemContainerTransitions">
-                <Setter.Value>
-                    <TransitionCollection>
-                        <AddDeleteThemeTransition/>
-                        <ContentThemeTransition/>
-                        <ReorderThemeTransition/>
-                        <EntranceThemeTransition IsStaggeringEnabled="False"/>
-                    </TransitionCollection>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListView">
-                        <ItemsPresenter FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}" Padding="{TemplateBinding Padding}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -191,7 +112,7 @@
                            FontWeight="SemiBold"
                            TextAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"/>
-                <TextBlock Padding="12,0,12,48"
+                <TextBlock Padding="12,0,12,24"
                            local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
                            TextAlignment="Center"
                            Style="{ThemeResource BodyTextBlockStyle}"
@@ -205,12 +126,12 @@
                       IsTabStop="False"
                       SelectedIndex="0"
                       Grid.Row="4">
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
-                <ListViewItem Style="{StaticResource IndicatorListViewItemStyle}"/>
+                <ListViewItem/>
+                <ListViewItem/>
+                <ListViewItem/>
+                <ListViewItem/>
+                <ListViewItem/>
+                <ListViewItem/>
             </ListView>
         </StackPanel>
 
@@ -225,86 +146,92 @@
             </Grid.ColumnDefinitions>
             <Border VerticalAlignment="Center">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
+                    <TextBlock x:Uid="IntroPage_Wizard1_Title"
                                Text="Telegram"
                                FontWeight="SemiBold"
                                TextAlignment="Center"
+                               Padding="12,200,12,12"
                                Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard1_Text"
                                local:Markdown.Text="The world's **fastest** messaging app.&#x0a;It is **free** and **secure**."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" Grid.Column="1">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
+                    <TextBlock x:Uid="IntroPage_Wizard2_Title"
                                Text="Fast"
                                FontWeight="SemiBold"
                                TextAlignment="Center"
+                               Padding="12,200,12,12"
                                Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard2_Text"
                                local:Markdown.Text="**Telegram** delivers messages faster&#x0a;than any other application."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" Grid.Column="2">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
+                    <TextBlock x:Uid="IntroPage_Wizard3_Title"
                                Text="Free"
                                FontWeight="SemiBold"
                                TextAlignment="Center"
+                               Padding="12,200,12,12"
                                Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard3_Text"
                                local:Markdown.Text="**Telegram** is free forever. No ads.&#x0a;No subscription fees."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" Grid.Column="3">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
-                                   Text="Powerful"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard4_Title"
+                               Text="Powerful"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Padding="12,200,12,12"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock x:Uid="IntroPage_Wizard4_Text"
                                local:Markdown.Text="**Telegram** has no limits on&#x0a;the size of your media and chats."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" Grid.Column="4">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
-                                   Text="Secure"
-                                   FontWeight="SemiBold"
-                                   TextAlignment="Center"
-                                   Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard5_Title"
+                               Text="Secure"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Padding="12,200,12,12"
+                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock x:Uid="IntroPage_Wizard5_Text"
                                local:Markdown.Text="**Telegram** keeps your messages&#x0a;safe from hacker attacks."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" Grid.Column="5">
                 <StackPanel>
-                    <TextBlock Padding="12,200,12,12"
+                    <TextBlock x:Uid="IntroPage_Wizard6_Title"
                                Text="Cloud-Based"
                                FontWeight="SemiBold"
                                TextAlignment="Center"
+                               Padding="12,200,12,12"
                                Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Padding="12,0,12,88"
+                    <TextBlock x:Uid="IntroPage_Wizard6_Text"
                                local:Markdown.Text="**Telegram** lets you access your&#x0a;messages from multiple devices."
                                TextAlignment="Center"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               MaxWidth="360"/>
+                               Padding="12,0,12,64"
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Border>
         </Grid>
